@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":126:{a:2:{s:7:"defects";a:1:{s:27:"App\GildedRoseTest::testFoo";i:3;}s:5:"times";a:1:{s:27:"App\GildedRoseTest::testFoo";d:0.002;}}}
