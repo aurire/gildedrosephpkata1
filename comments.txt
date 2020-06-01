@@ -1,0 +1,38 @@
+As Item.php is not allowed to change, we must get along with those three properties, $sell_in and $quality have functional
+value, so we can not change them, hence the new feature - conjured items can only be implemented with special $name - e.g.
+if item name has "Conjured" string in it, we can treat it as such.
+Also, current code, though system is working, currently only 1 type of concert is hardcoded in code, same with legendary
+item. Not that clear from requirements if e.g. "Aged Brie" has to be named exactly that, or maybe there can be several brands
+of that brie, e.g. Durch aged brie ; Italian aged brie ; Aged brie Sper Extra.
+
+I make such assumptions:
+
+An item can be:
+* Simple item;
+* Special item: if it contains case insensitive string identifying the specific special item type, e.g.:
+aged brie,
+sulfuras,
+backstage passes,
+conjured,
+... - maybe some other item will need to be added in the future.
+
+Also I would like to have some priority, for assigning types, so e.g. if name is Conjured Backstage passes for Sulfuras
+- it would qualify for 3 types, so there I would assign a type by priority, so if Conjured is - priority 10, Sulfuras
+- priority - 999 and backstage passes - priority 3; "Conjured Backstage passes for Sulfuras" would be considered to be Sulfuras.
+
+One way to organize items is to have a special class for it, say TypedItem. As we are forbidden to change Item.php and
+it comes as Item to GildedRose through constructor, (we can only use TypedItem for our convenience later on in UpdatePrice)
+it makes sense to prepare TypedItem to: get type by $name and deal only with $sell_in and $quality in some process() method.
+
+Before refactoring I will write tests to ensure current code works according my specified assumptions and requirements from
+requirements.txt - such as not allowing negative quality.
+
+I will now try to ennumerate requirements for initial testing:
+
+After running updateQuality for each Item:
+
+$sell_in decreases by one unless it is less or equal to zero.
+$quality decreases according rules set by types
+$quality never goes below zero
+$quality never goes above 50 unless it can be above 50.
+
