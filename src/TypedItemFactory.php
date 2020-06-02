@@ -18,6 +18,7 @@ class TypedItemFactory
         'sulfuras',
         'brie',
         'passes',
+        'conjured',
     ];
 
     /**

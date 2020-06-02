@@ -3,6 +3,7 @@
 namespace App;
 
 use App\TypedItem\BrieItem;
+use App\TypedItem\ConjuredItem;
 use App\TypedItem\PassesItem;
 use App\TypedItem\SimpleItem;
 use App\TypedItem\SulfurasItem;
@@ -51,5 +52,15 @@ class TypedItemFactoryTest extends \PHPUnit\Framework\TestCase
         $simpleItem = $factory->create($item);
 
         $this->assertTrue($simpleItem instanceof SimpleItem);
+    }
+
+    public function testConjuredItemCreateWithFactory()
+    {
+        $item = new Item('Conjured Mana Cake', 10, 10);
+
+        $factory = new TypedItemFactory();
+        $conjuredItem = $factory->create($item);
+
+        $this->assertTrue($conjuredItem instanceof ConjuredItem);
     }
 }

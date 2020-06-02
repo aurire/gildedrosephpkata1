@@ -264,6 +264,14 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
 
                         break;
                     case 'conjured':
+                        if ($lastDay->quality > 0) {
+                            $qualityPenalty = $lastDay->sell_in > 0 ? 2 : 4;
+                            $qualityWithPenalty = $lastDay->quality - $qualityPenalty;
+                            $this->assertEquals(
+                                $currentDay->quality,
+                                $qualityWithPenalty < 0 ? 0 : $qualityWithPenalty
+                            );
+                        }
                         break;
                     case 'simple':
                     default:
