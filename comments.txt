@@ -29,7 +29,7 @@ requirements.txt - such as not allowing negative quality.
 
 I will now try to ennumerate requirements for initial testing:
 
-After running updateQuality for each Item:
+After running updateQuality for 4each Item:
 
 $sell_in decreases by one unless it is less or equal to zero.
 $quality decreases according rules set by types

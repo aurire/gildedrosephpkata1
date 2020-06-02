@@ -65,5 +65,12 @@ final class GildedRose
             }
         }
     }
-}
 
+    /**
+     * @return array
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+}
