@@ -1,11 +1,13 @@
 <?php
 
-
 namespace App;
-
 
 use App\TypedItem\SimpleItem;
 
+/**
+ * Class TypedItemFactory
+ * @package App
+ */
 class TypedItemFactory
 {
     /**
@@ -18,7 +20,11 @@ class TypedItemFactory
         'passes',
     ];
 
-    public function getTypeByName($name)
+    /**
+     * @param $name
+     * @return string
+     */
+    private function getTypeByName($name)
     {
         foreach ($this->availableTypes as $availableType) {
             /** @var TypedItem $class */

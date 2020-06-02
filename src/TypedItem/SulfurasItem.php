@@ -2,9 +2,12 @@
 
 namespace App\TypedItem;
 
-use App\Item;
 use App\TypedItem;
 
+/**
+ * Class SulfurasItem
+ * @package App\TypedItem
+ */
 class SulfurasItem extends TypedItem
 {
     const NAME = 'sulfuras';

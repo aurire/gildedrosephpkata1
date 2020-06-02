@@ -5,11 +5,19 @@ namespace App\TypedItem;
 use App\Item;
 use App\TypedItem;
 
+/**
+ * Class PassesItem
+ * @package App\TypedItem
+ */
 class PassesItem extends TypedItem
 {
     const NAME = 'passes';
     const KEYWORD = 'backstage passes';
 
+    /**
+     * @param Item $item
+     * @return int
+     */
     private function getIncreaseSize(Item $item)
     {
         if ($item->sell_in > 10) {
@@ -25,19 +33,23 @@ class PassesItem extends TypedItem
         return $size;
     }
 
+    /**
+     * @param Item $item
+     */
     public function increaseQuality(Item $item)
     {
         $item->quality += $this->getIncreaseSize($item);
         $item->quality = $item->quality > 50 ? 50 : $item->quality;
     }
 
+    /**
+     *
+     */
     public function process()
     {
         /** @var Item $item */
         $item = $this->getItem();
-        if ($item->sell_in > 0) {
-            $item->sell_in--;
-        }
         $this->increaseQuality($item);
+        $item->sell_in--;
     }
 }

@@ -4,6 +4,10 @@ namespace App\TypedItem;
 
 use App\Item;
 
+/**
+ * Class PassesItemTest
+ * @package App\TypedItem
+ */
 class PassesItemTest extends \PHPUnit\Framework\TestCase
 {
     public function testConstructAndGetItem()
@@ -31,7 +35,7 @@ class PassesItemTest extends \PHPUnit\Framework\TestCase
 
         /** @var Item $item */
         foreach ($items as $item) {
-            $this->assertTrue(BrieItem::isOfThisType($item));
+            $this->assertTrue(PassesItem::isOfThisType($item));
         }
     }
 
@@ -44,17 +48,7 @@ class PassesItemTest extends \PHPUnit\Framework\TestCase
 
         /** @var Item $item */
         foreach ($items as $item) {
-            $this->assertFalse(SulfurasItem::isOfThisType($item));
+            $this->assertFalse(PassesItem::isOfThisType($item));
         }
-    }
-
-    public function testProcessesCorrectly()
-    {
-        $item = new Item('Sulfuras, Hand of Ragnaros', 15, 20);
-        $typedItem = new SulfurasItem($item);
-        $typedItem->process();
-
-        //@TODO: write a test, before actualy writing logic for Sulfuras item
-        $this->assertTrue(false);
     }
 }

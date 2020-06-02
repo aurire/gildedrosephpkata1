@@ -2,6 +2,10 @@
 
 namespace App;
 
+/**
+ * Class TypedItem
+ * @package App
+ */
 abstract class TypedItem
 {
     const NAME = 'undefined';
@@ -46,5 +50,8 @@ abstract class TypedItem
         return strpos(strtolower($name), static::KEYWORD) !== false;
     }
 
+    /**
+     * @return void
+     */
     abstract public function process();
 }

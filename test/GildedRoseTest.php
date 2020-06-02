@@ -2,6 +2,10 @@
 
 namespace App;
 
+/**
+ * Class GildedRoseTest
+ * @package App
+ */
 class GildedRoseTest extends \PHPUnit\Framework\TestCase
 {
     /**
@@ -20,7 +24,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
      */
     private function compareWithLastDay(GildedRose $gildedRose, array $lastDay, Callable $comparison)
     {
-        reset ($lastDay);
+        reset($lastDay);
         /** @var Item $item */
         foreach ($gildedRose->getItems() as $item) {
             $lastDayItem = current($lastDay);
@@ -115,7 +119,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
         $this->compareAllDaysWithPrevious(
             $gildedRose,
             $dayCount,
-            function(Item $lastDay, Item $currentDay) {
+            function (Item $lastDay, Item $currentDay) {
                 if ($lastDay->sell_in > 0) {
                     $this->assertEquals(
                         $currentDay->sell_in,
@@ -213,7 +217,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
         $this->compareAllDaysWithPrevious(
             $gildedRose,
             $dayCount,
-            function(Item $lastDay, Item $currentDay) {
+            function (Item $lastDay, Item $currentDay) {
                 $type = $this->detectItemTypeByName($currentDay->name);
                 switch ($type) {
                     case 'sulfuras':
@@ -254,7 +258,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
                             $boosted = $lastDay->quality + $qualityBoost;
                             $this->assertEquals(
                                 $currentDay->quality,
-                                $boosted > 50 ? 50: $boosted
+                                $boosted > 50 ? 50 : $boosted
                             );
                         }
 

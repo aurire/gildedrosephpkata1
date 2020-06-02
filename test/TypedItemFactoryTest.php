@@ -7,6 +7,10 @@ use App\TypedItem\PassesItem;
 use App\TypedItem\SimpleItem;
 use App\TypedItem\SulfurasItem;
 
+/**
+ * Class TypedItemFactoryTest
+ * @package App
+ */
 class TypedItemFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testSulfurasItemCreateWithFactory()
