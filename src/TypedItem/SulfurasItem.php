@@ -2,6 +2,7 @@
 
 namespace App\TypedItem;
 
+use App\Item;
 use App\TypedItem;
 
 class SulfurasItem extends TypedItem
@@ -11,6 +12,6 @@ class SulfurasItem extends TypedItem
 
     public function process()
     {
-        // TODO: Implement process() method.
+        //intentionaly do nothing
     }
 }
