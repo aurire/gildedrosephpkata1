@@ -35,9 +35,9 @@ class ConjuredItem extends TypedItem
      */
     public function decreaseQuality(Item $item)
     {
-        if ($item->quality > 0) {
+        if ($item->quality > static::QUALITY_MIN) {
             $item->quality -= $this->getDecreaseSize($item);
-            $item->quality = $item->quality < 0 ? 0 : $item->quality;
+            $item->quality = $item->quality < static::QUALITY_MIN ? static::QUALITY_MIN : $item->quality;
         }
     }
 

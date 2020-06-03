@@ -21,9 +21,9 @@ class BrieItemTest extends \PHPUnit\Framework\TestCase
     public function testGetTypeName()
     {
         $item = new Item('not important', 15, 20);
-        $sulfurasItem = new BrieItem($item);
+        $brieItem = new BrieItem($item);
 
-        $this->assertTrue($sulfurasItem->getTypeName() === BrieItem::NAME);
+        $this->assertTrue($brieItem->getTypeName() === BrieItem::NAME);
     }
 
     public function testCorrectlyDetectsType()
@@ -49,7 +49,7 @@ class BrieItemTest extends \PHPUnit\Framework\TestCase
 
         /** @var Item $item */
         foreach ($items as $item) {
-            $this->assertFalse(SulfurasItem::isOfThisType($item));
+            $this->assertFalse(BrieItem::isOfThisType($item));
         }
     }
 }

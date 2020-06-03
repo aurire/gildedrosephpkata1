@@ -2,7 +2,11 @@
 
 namespace App;
 
+use App\TypedItem\BrieItem;
+use App\TypedItem\ConjuredItem;
+use App\TypedItem\PassesItem;
 use App\TypedItem\SimpleItem;
+use App\TypedItem\SulfurasItem;
 
 /**
  * Class TypedItemFactory
@@ -15,10 +19,10 @@ class TypedItemFactory
      * additional burden of specifying them in TypedItem classes and then sorting them.
      */
     private $availableTypes = [
-        'sulfuras',
-        'brie',
-        'passes',
-        'conjured',
+        SulfurasItem::NAME,
+        BrieItem::NAME,
+        PassesItem::NAME,
+        ConjuredItem::NAME,
     ];
 
     /**

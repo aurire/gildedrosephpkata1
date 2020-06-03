@@ -39,7 +39,7 @@ class PassesItem extends TypedItem
     public function increaseQuality(Item $item)
     {
         $item->quality += $this->getIncreaseSize($item);
-        $item->quality = $item->quality > 50 ? 50 : $item->quality;
+        $item->quality = $item->quality > static::QUALITY_MAX ? static::QUALITY_MAX : $item->quality;
     }
 
     /**

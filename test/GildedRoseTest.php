@@ -2,6 +2,12 @@
 
 namespace App;
 
+use App\TypedItem\BrieItem;
+use App\TypedItem\ConjuredItem;
+use App\TypedItem\PassesItem;
+use App\TypedItem\SimpleItem;
+use App\TypedItem\SulfurasItem;
+
 /**
  * Class GildedRoseTest
  * @package App
@@ -34,6 +40,11 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
         }
     }
 
+    /**
+     * @param GildedRose $gildedRose
+     * @param int $dayCount
+     * @param callable $comparison
+     */
     public function compareAllDaysWithPrevious(GildedRose $gildedRose, int $dayCount, Callable $comparison)
     {
         if ($dayCount < 1) {
@@ -113,29 +124,6 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
      * @param array $items
      * @param int $dayCount
      */
-    public function testXXX(array $items, int $dayCount)
-    {
-        $gildedRose = new GildedRose($items);
-        $this->compareAllDaysWithPrevious(
-            $gildedRose,
-            $dayCount,
-            function (Item $lastDay, Item $currentDay) {
-                if ($lastDay->sell_in > 0) {
-                    $this->assertEquals(
-                        $currentDay->sell_in,
-                        $lastDay->sell_in - 1
-                    );
-                }
-            }
-        );
-    }
-
-    /**
-     * @dataProvider itemsProvider
-     *
-     * @param array $items
-     * @param int $dayCount
-     */
     public function testQualityDoesNotGetLowerThanZero(array $items, int $dayCount)
     {
         $gildedRose = new GildedRose($items);
@@ -157,7 +145,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
      */
     private function canQualityBeOverZero(Item $item): bool
     {
-        return strpos(strtolower($item->name), 'sulfuras') !== false;
+        return strpos(strtolower($item->name), SulfurasItem::NAME) !== false;
     }
 
     /**
@@ -175,7 +163,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
             foreach ($gildedRoseItems as $item) {
                 if (!$this->canQualityBeOverZero($item)) {
                     $this->assertTrue(
-                        $item->quality <= 50
+                        $item->quality <= TypedItem::QUALITY_MAX
                     );
                 }
             }
@@ -190,10 +178,10 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
     public function detectItemTypeByName(string $name): string
     {
         $mapKeywordToType = [
-            'sulfuras' => 'sulfuras',
-            'backstage passes' => 'passes',
-            'aged brie' => 'brie',
-            'conjured' => 'conjured',
+            SulfurasItem::KEYWORD => SulfurasItem::NAME,
+            PassesItem::KEYWORD => PassesItem::NAME,
+            BrieItem::KEYWORD => BrieItem::NAME,
+            ConjuredItem::KEYWORD => ConjuredItem::NAME,
         ];
         foreach ($mapKeywordToType as $keyword => $type) {
             if (strpos(strtolower($name), $keyword) !== false) {
@@ -201,7 +189,7 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
             }
         }
 
-        return 'simple';
+        return SimpleItem::NAME;
     }
 
     /**
@@ -234,7 +222,10 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
                          * and by 3 when there are 5 days or less
                          * but Quality drops to 0 after the concert
                          */
-                        if ($lastDay->quality < 50 && $lastDay->quality > 0) {
+                        if (
+                            $lastDay->quality < TypedItem::QUALITY_MAX
+                            && $lastDay->quality > TypedItem::QUALITY_MIN
+                        ) {
                             if ($lastDay->sell_in > 10) {
                                 $qualityBoost = 1;
                             } elseif ($lastDay->sell_in > 5) {
@@ -247,24 +238,24 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
                             $boosted = $lastDay->quality + $qualityBoost;
                             $this->assertEquals(
                                 $currentDay->quality,
-                                $boosted > 50 ? 50 : $boosted
+                                $boosted > TypedItem::QUALITY_MAX ? TypedItem::QUALITY_MAX : $boosted
                             );
                         }
 
                         break;
                     case 'brie':
-                        if ($lastDay->quality < 50) {
+                        if ($lastDay->quality < TypedItem::QUALITY_MAX) {
                             $qualityBoost = $lastDay->sell_in > 0 ? 1 : 2;
                             $boosted = $lastDay->quality + $qualityBoost;
                             $this->assertEquals(
                                 $currentDay->quality,
-                                $boosted > 50 ? 50 : $boosted
+                                $boosted > TypedItem::QUALITY_MAX ? TypedItem::QUALITY_MAX : $boosted
                             );
                         }
 
                         break;
                     case 'conjured':
-                        if ($lastDay->quality > 0) {
+                        if ($lastDay->quality > TypedItem::QUALITY_MIN) {
                             $qualityPenalty = $lastDay->sell_in > 0 ? 2 : 4;
                             $qualityWithPenalty = $lastDay->quality - $qualityPenalty;
                             $this->assertEquals(
@@ -272,10 +263,11 @@ class GildedRoseTest extends \PHPUnit\Framework\TestCase
                                 $qualityWithPenalty < 0 ? 0 : $qualityWithPenalty
                             );
                         }
+
                         break;
                     case 'simple':
                     default:
-                        if ($lastDay->quality > 0) {
+                        if ($lastDay->quality > TypedItem::QUALITY_MIN) {
                             $qualityPenalty = $lastDay->sell_in > 0 ? 1 : 2;
                             $qualityWithPenalty = $lastDay->quality - $qualityPenalty;
                             $this->assertEquals(

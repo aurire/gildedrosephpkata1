@@ -9,7 +9,7 @@ final class Item {
     public $quality;
 
     function __construct($name, $sell_in, $quality) {
-        $this->name    = $name;
+        $this->name = $name;
         $this->sell_in = $sell_in;
         $this->quality = $quality;
     }
@@ -18,4 +18,3 @@ final class Item {
         return "{$this->name}, {$this->sell_in}, {$this->quality}";
     }
 }
-

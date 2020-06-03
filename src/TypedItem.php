@@ -11,6 +11,9 @@ abstract class TypedItem
     const NAME = 'undefined';
     const KEYWORD = 'undefined';
 
+    const QUALITY_MAX = 50;
+    const QUALITY_MIN = 0;
+
     /**
      * @var Item
      */
